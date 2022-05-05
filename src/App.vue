@@ -1,7 +1,11 @@
-<script setup></script>
+<script setup>
+    import Navbar from './components/Navbar.vue';
+</script>
 
 <template>
-    <p class="text-4xl">On Point</p>
+    <Navbar/>
 </template>
 
-<style></style>
+<style>
+
+</style>
