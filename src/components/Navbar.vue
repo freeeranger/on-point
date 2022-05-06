@@ -7,16 +7,16 @@ let offset = ref(2);
 const route = useRoute();
 watch(route, () => {
     switch(route.name){
-        case "history":
+        case "progress":
             offset.value = 0;
             break;
-        case "new-workout":
+        case "history":
             offset.value = 1;
             break;
         case "home":
             offset.value = 2;
             break;
-        case "progress":
+        case "new-workout":
             offset.value = 3;
             break;
         case "options":
@@ -30,16 +30,16 @@ watch(route, () => {
     <div class="navbar fixed bottom-0 left-0 w-full accentcolor rounded-t-2xl">
         <ul class="text-center h-full flex flex-grow justify-center flex-row items-center text-xl text-white">
             <li class="w-full pt-4 pb-4">
-                <router-link :to="{name: 'history'}"><i class="fa-solid fa-clipboard" /></router-link>
+                <router-link :to="{name: 'progress'}"><i class="fa-solid fa-rocket" /></router-link>
             </li>
             <li class="w-full pt-4 pb-4">
-                <router-link :to="{name: 'new-workout'}"><i class="fa-solid fa-dumbbell" /></router-link>
+                <router-link :to="{name: 'history'}"><i class="fa-solid fa-dumbbell" /></router-link>
             </li>
             <li class="w-full pt-4 pb-4 text-2xl">
                 <router-link :to="{name: 'home'}"><i class="fa-solid fa-house" /></router-link>
             </li>
             <li class="w-full pt-4 pb-4">
-                <router-link :to="{name: 'progress'}"><i class="fa-solid fa-rocket" /></router-link>
+                <router-link :to="{name: 'new-workout'}"><i class="fa-solid fa-circle-plus" /></router-link>
             </li>
             <li class="w-full pt-4 pb-4">
                 <router-link :to="{name: 'options'}"><i class="fa-solid fa-cog" /></router-link>
