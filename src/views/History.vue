@@ -24,17 +24,28 @@
                     <div><p>14 mars</p></div>
                     <div class="mr-2"><i class="fa-solid fa-angle-right" /></div>
                 </li>
+
+                <li class="bg-slate-600 p-2 rounded-md mb-3 flex justify-between drop-shadow-md">
+                    <div><p>11 mars</p></div>
+                    <div class="mr-2"><i class="fa-solid fa-angle-right" /></div>
+                </li>
+
+                <li class="bg-slate-600 p-2 rounded-md mb-3 flex justify-between drop-shadow-md">
+                    <div><p>10 mars</p></div>
+                    <div class="mr-2"><i class="fa-solid fa-angle-right" /></div>
+                </li>
+
+                <li class="bg-slate-600 p-2 rounded-md mb-3 flex justify-between drop-shadow-md">
+                    <div><p>6 mars</p></div>
+                    <div class="mr-2"><i class="fa-solid fa-angle-right" /></div>
+                </li>
+
+                <li class="bg-slate-600 p-2 rounded-md mb-3 flex justify-between drop-shadow-md">
+                    <div><p>5 mars</p></div>
+                    <div class="mr-2"><i class="fa-solid fa-angle-right" /></div>
+                </li>
             </ul>
         </div>
-
-        <br />
-
-        <div class="bg-slate-700 p-4 pt-2 rounded-lg drop-shadow-md">
-            <h2 class="text-2xl font-semibold mb-2">Progress</h2>
-            <p>No data available</p>
-        </div>
-
-        <br />
     </div>
 </template>
 
