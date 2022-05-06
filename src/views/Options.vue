@@ -6,32 +6,32 @@
             <h2 class="text-2xl font-semibold mb-2">Options</h2>
             <ul>
                 <li class="bg-slate-600 p-2 rounded-md mb-3 flex justify-between drop-shadow-md">
-                    <div><p><i class="fa-solid fa-user mr-3"/>Account</p></div>
+                    <div><p><i class="fa-solid fa-user mr-3 ml-1"/>Account</p></div>
                     <div class="mr-2"><i class="fa-solid fa-angle-right" /></div>
                 </li>
 
                 <li class="bg-slate-600 p-2 rounded-md mb-3 flex justify-between drop-shadow-md">
-                    <div><p><i class="fa-solid fa-palette mr-3"/>Appearance</p></div>
+                    <div><p><i class="fa-solid fa-palette mr-3 ml-1"/>Appearance</p></div>
                     <div class="mr-2"><i class="fa-solid fa-angle-right" /></div>
                 </li>
 
                 <li class="bg-slate-600 p-2 rounded-md mb-3 flex justify-between drop-shadow-md">
-                    <div><p><i class="fa-solid fa-clipboard mr-3"/>Features</p></div>
+                    <div><p><i class="fa-solid fa-clipboard mr-3 ml-1"/>Features</p></div>
                     <div class="mr-2"><i class="fa-solid fa-angle-right" /></div>
                 </li>
 
                 <li class="bg-slate-600 p-2 rounded-md mb-3 flex justify-between drop-shadow-md">
-                    <div><p><i class="fa-solid fa-bell mr-3"/>Notifications</p></div>
+                    <div><p><i class="fa-solid fa-bell mr-3 ml-1"/>Notifications</p></div>
                     <div class="mr-2"><i class="fa-solid fa-angle-right" /></div>
                 </li>
 
                 <li class="bg-slate-600 p-2 rounded-md mb-3 flex justify-between drop-shadow-md">
-                    <div><p><i class="fa-solid fa-lock mr-3"/>Data</p></div>
+                    <div><p><i class="fa-solid fa-lock mr-3 ml-1"/>Data</p></div>
                     <div class="mr-2"><i class="fa-solid fa-angle-right" /></div>
                 </li>
 
                 <li class="bg-slate-600 p-2 rounded-md mb-3 flex justify-between drop-shadow-md">
-                    <div><p><i class="fa-solid fa-circle-info mr-3"/>About</p></div>
+                    <div><p><i class="fa-solid fa-circle-info mr-3 ml-1"/>About</p></div>
                     <div class="mr-2"><i class="fa-solid fa-angle-right" /></div>
                 </li>
             </ul>
