@@ -26,6 +26,11 @@ const routes = [
         name: "history",
         component: () => import(/* webpackChunkName: "history" */ "../views/History.vue"),
     },
+    {
+        path: "/workout",
+        name: "workout",
+        component: () => import(/* webpackChunkName: "workout" */ "../views/Workout.vue"),
+    },
 ];
 
 const router = createRouter({
