@@ -3,7 +3,7 @@
 <template>
     <div class="m-4 text-white">
         <div class="bg-primary p-4 pt-2 pb-2 rounded-lg drop-shadow-md">
-            <div class="flex justify-between items-center">
+            <div class="flex justify-between items-center mt-1">
                 <h2 class="text-2xl font-semibold">22 mars</h2>
                 <i class="fa-solid fa-pencil" />
             </div>
@@ -12,7 +12,7 @@
                 <li class="bg-secondary p-2 rounded-md mt-3 mb-2 flex justify-between drop-shadow-md">
                     <div class="ml-1 w-full">
                         <p class="font-bold tracking-wider text-xl mb-1">Bench press</p>
-
+                        <hr class="border-slate-500" />
                         <table class="w-full">
                             <tbody>
                                 <tr>
@@ -38,7 +38,7 @@
                 <li class="bg-secondary p-2 rounded-md mt-3 mb-2 flex justify-between drop-shadow-md">
                     <div class="ml-1 w-full">
                         <p class="font-bold tracking-wider text-xl mb-1">Shoulder press</p>
-
+                        <hr class="border-slate-500" />
                         <table class="w-full">
                             <tbody>
                                 <tr>
@@ -65,8 +65,9 @@
     </div>
 </template>
 
-<style scoped>
+<style lang="scss" scoped>
 td {
     padding-bottom: 0.5rem;
+    color: white;
 }
 </style>
