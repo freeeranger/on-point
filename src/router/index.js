@@ -27,7 +27,7 @@ const routes = [
         component: () => import(/* webpackChunkName: "history" */ "../views/History.vue"),
     },
     {
-        path: "/workout",
+        path: "/workout/:id",
         name: "workout",
         component: () => import(/* webpackChunkName: "workout" */ "../views/Workout.vue"),
     },

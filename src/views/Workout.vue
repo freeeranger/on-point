@@ -1,71 +1,59 @@
-<script setup></script>
+<script setup>
+import { data } from '../data/data.js';
+import { useRoute } from 'vue-router';
+
+const route = useRoute();
+
+const localData = data.value[route.params.id];
+const target = route.params.sender;
+</script>
 
 <template>
     <div class="m-4 text-white">
-        <div class="bg-primary p-4 pt-2 pb-2 rounded-lg drop-shadow-md">
+        <div class="bg-primary pt-2 pr-4 pl-4 rounded-t-lg drop-shadow-md">
             <div class="flex justify-between items-center mt-1">
-                <h2 class="text-2xl font-semibold">22 mars</h2>
+                <div class="flex items-center">
+                    <div class="text-xl ml-1 mr-4"><router-link :to="{ name: target }"><i class="fa-solid fa-angle-left" /></router-link></div>
+                    <h2 class="text-2xl font-semibold">{{localData.date}}</h2>
+                </div>
                 <i class="fa-solid fa-pencil" />
             </div>
+        </div>
 
-            <ul>
-                <li class="bg-secondary p-2 rounded-md mt-3 mb-2 flex justify-between drop-shadow-md">
-                    <div class="ml-1 w-full">
-                        <p class="font-bold tracking-wider text-xl mb-1">Bench press</p>
-                        <hr class="border-slate-500" />
-                        <table class="w-full">
-                            <tbody>
-                                <tr>
-                                    <td><span class="text-xs text-gray-300"># </span>1</td>
-                                    <td>75 <span class="text-xs text-gray-300">kg</span></td>
-                                    <td>5 <span class="text-xs text-gray-300">reps</span></td>
-                                </tr>
-                                <tr>
-                                    <td><span class="text-xs text-gray-300"># </span>2</td>
-                                    <td>75 <span class="text-xs text-gray-300">kg</span></td>
-                                    <td>5 <span class="text-xs text-gray-300">reps</span></td>
-                                </tr>
-                                <tr>
-                                    <td><span class="text-xs text-gray-300"># </span>3</td>
-                                    <td>75 <span class="text-xs text-gray-300">kg</span></td>
-                                    <td>5 <span class="text-xs text-gray-300">reps</span></td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                </li>
+        <div class="bg-primary p-4 pt-0 pb-2 rounded-b-lg drop-shadow-md container">
+            <div class="mt-2 ml-1">
+                <p><span class="font-semibold">Type:</span> {{localData.type}}</p>
+            </div>
 
-                <li class="bg-secondary p-2 rounded-md mt-3 mb-2 flex justify-between drop-shadow-md">
-                    <div class="ml-1 w-full">
-                        <p class="font-bold tracking-wider text-xl mb-1">Shoulder press</p>
-                        <hr class="border-slate-500" />
-                        <table class="w-full">
-                            <tbody>
-                                <tr>
-                                    <td><span class="text-xs text-gray-300"># </span>1</td>
-                                    <td>25 <span class="text-xs text-gray-300">kg</span></td>
-                                    <td>9 <span class="text-xs text-gray-300">reps</span></td>
-                                </tr>
-                                <tr>
-                                    <td><span class="text-xs text-gray-300"># </span>2</td>
-                                    <td>25 <span class="text-xs text-gray-300">kg</span></td>
-                                    <td>9 <span class="text-xs text-gray-300">reps</span></td>
-                                </tr>
-                                <tr>
-                                    <td><span class="text-xs text-gray-300"># </span>3</td>
-                                    <td>25 <span class="text-xs text-gray-300">kg</span></td>
-                                    <td>8 <span class="text-xs text-gray-300">reps</span></td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                </li>
-            </ul>
+            <div>
+                <ul>
+                    <li class="bg-secondary p-2 rounded-md mt-3 mb-2 flex justify-between drop-shadow-md" v-for="a in localData.workouts">
+                        <div class="ml-1 w-full">
+                            <p class="font-bold tracking-wider text-xl mb-1">{{a.name}}</p>
+                            <hr class="border-slate-500 mb-1" />
+                            <table class="w-full">
+                                <tbody>
+                                    <tr v-for="(b, index) in a.sets">
+                                        <td><span class="text-xs text-gray-300"># </span>{{index}}</td>
+                                        <td>{{b.weight}} <span class="text-xs text-gray-300">kg</span></td>
+                                        <td>{{b.reps}} <span class="text-xs text-gray-300">reps</span></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </li>
+                </ul>
+            </div>
         </div>
     </div>
 </template>
 
 <style lang="scss" scoped>
+.container{
+    height: calc(100vh - 3.8rem - 4.6rem);
+    overflow: scroll;
+}
+
 td {
     padding-bottom: 0.5rem;
     color: white;
