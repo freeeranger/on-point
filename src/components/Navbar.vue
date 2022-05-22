@@ -27,27 +27,27 @@ watch(route, () => {
 </script>
 
 <template>
-    <div class="navbar fixed bottom-0 left-0 w-full bg-accent rounded-t-2xl">
-        <ul class="text-center h-full flex flex-grow justify-center flex-row items-center text-xl text-white">
+    <div class="navbar fixed bottom-0 left-0 w-full bg-bg">
+        <ul class="text-center h-full flex flex-grow justify-center flex-row items-center text-lg text-white">
             <li class="w-full pt-4 pb-4">
-                <router-link :to="{ name: 'progress' }" class="p-3"><i class="fa-solid fa-rocket" /></router-link>
+                <FaIcon icon="rocket" class="p-3" @click="$router.push({ name: 'progress' })" />
             </li>
             <li class="w-full pt-4 pb-4">
-                <router-link :to="{ name: 'history' }" class="p-3"><i class="fa-solid fa-dumbbell" /></router-link>
-            </li>
-            <li class="w-full pt-4 pb-4 text-2xl">
-                <router-link :to="{ name: 'home' }" class="p-3"><i class="fa-solid fa-house" /></router-link>
+                <FaIcon icon="dumbbell" class="p-3" @click="$router.push({ name: 'history' })" />
             </li>
             <li class="w-full pt-4 pb-4">
-                <router-link :to="{ name: 'new-workout' }" class="p-3"><i class="fa-solid fa-circle-plus" /></router-link>
+                <FaIcon icon="house" class="p-3" @click="$router.push({ name: 'home' })" />
             </li>
             <li class="w-full pt-4 pb-4">
-                <router-link :to="{ name: 'options' }" class="p-3"><i class="fa-solid fa-cog" /></router-link>
+                <FaIcon icon="circle-plus" class="p-3" @click="$router.push({ name: 'new-workout' })" />
+            </li>
+            <li class="w-full pt-4 pb-4">
+                <FaIcon icon="cog" class="p-3" @click="$router.push({ name: 'options' })" />
             </li>
         </ul>
     </div>
 
-    <div class="bg-white w-1/5 h-1 rounded-t-md fixed bottom-0 marker" :style="'left:' + offset * 20 + '%'"></div>
+    <div class="bg-accent-gradient w-1/5 h-1 rounded-t-md fixed bottom-0 marker" :style="'left:' + offset * 20 + '%'"></div>
 </template>
 
 <style lang="scss" scoped>

@@ -20,15 +20,23 @@ $dark-secondary: #212121;
 $dark-accent: #45119e;
 $dark-bg: #0e0e0e;
 
-// select theme
-$primary: $blue-primary;
-$secondary: $blue-secondary;
-$accent: $blue-accent;
-$bg: $blue-bg;
+$next-primary: #262a34;
+$next-secondary: #000000;
+$next-accent: #b66cff;
+$next-bg: #181a20;
 
-body {
+// select theme
+$primary: $next-primary;
+$secondary: $next-secondary;
+$accent: $next-accent;
+$bg: $next-bg;
+
+html {
     background-color: $bg;
+    width: 100%;
+    height: 100%;
 }
+
 #app {
     padding: 0;
     margin: 0;
@@ -47,13 +55,20 @@ body {
     background-color: $accent;
 }
 
+.bg-accent-gradient {
+    background: linear-gradient(115deg, #a245ff 0%, #b66cff 51%, #c58aff 100%);
+}
+
+.bg-bg {
+    background-color: $bg;
+}
+
 * {
-  -webkit-touch-callout: none; /* iOS Safari */
-    -webkit-user-select: none; /* Safari */
-     -khtml-user-select: none; /* Konqueror HTML */
-       -moz-user-select: none; /* Old versions of Firefox */
-        -ms-user-select: none; /* Internet Explorer/Edge */
-            user-select: none; /* Non-prefixed version, currently
-                                  supported by Chrome, Edge, Opera and Firefox */
+    -webkit-touch-callout: none !important; // iOS Safari
+    -webkit-user-select: none !important; // Safari
+    -khtml-user-select: none !important; // Konqueror HTML
+    -moz-user-select: none !important; // Old versions of Firefox
+    -ms-user-select: none !important; //Internet Explorer/Edge
+    user-select: none !important; //Non-prefixed version, currently supported by Chrome, Edge, Opera and Firefox
 }
 </style>

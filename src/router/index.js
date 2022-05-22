@@ -1,10 +1,18 @@
+import { nextTick } from "vue";
 import { createRouter, createWebHistory } from "vue-router";
+import { supabase } from "../supabase.js";
 
 const routes = [
     {
         path: "/",
         name: "home",
         component: () => import(/* webpackChunkName: "home" */ "../views/Home.vue"),
+    },
+    ,
+    {
+        path: "/auth",
+        name: "auth",
+        component: () => import(/* webpackChunkName: "auth" */ "../views/Auth.vue"),
     },
     {
         path: "/new-workout",
@@ -36,6 +44,18 @@ const routes = [
 const router = createRouter({
     history: createWebHistory(),
     routes,
+});
+
+router.beforeEach((to, from, next) => {
+    // ...
+    // explicitly return false to cancel the navigation
+
+    if (!supabase.auth.session() && to.name !== "auth") {
+        next({ name: "auth" });
+        return;
+    }
+
+    next();
 });
 
 export default router;

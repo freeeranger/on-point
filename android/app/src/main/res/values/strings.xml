@@ -1,0 +1,7 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="app_name">on-point</string>
+    <string name="title_activity_main">on-point</string>
+    <string name="package_name">com.freeranger.onpoint</string>
+    <string name="custom_url_scheme">com.freeranger.onpoint</string>
+</resources>
