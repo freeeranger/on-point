@@ -1,22 +1,31 @@
 <script setup>
-import { data } from "../data/data.js";
 import { useRoute } from "vue-router";
+import { supabase } from "../supabase.js";
+import { ref } from "vue";
 
 const route = useRoute();
 
-const localData = data.value[route.params.id];
 const target = route.params.sender;
+
+let data = ref(null);
+
+async function sqlStuff() {
+    let { data: userData, error } = await supabase.from("UserData").select();
+    data.value = userData.find((user) => user.user == supabase.auth.user().id).data.workouts[route.params.id];
+}
+
+sqlStuff();
 </script>
 
 <template>
-    <div class="m-4 text-white">
+    <div class="m-4 text-white" v-if="data != null">
         <div class="pt-2 pr-4 pl-4">
             <div class="flex justify-between items-center mt-1">
                 <div class="flex items-center">
                     <div class="text-xl ml-1 mr-4">
                         <FaIcon icon="angle-left" @click="$router.push({ name: target })" />
                     </div>
-                    <h2 class="text-2xl font-semibold">{{ localData.date }}</h2>
+                    <h2 class="text-2xl font-semibold">{{ data.date }}</h2>
                 </div>
                 <FaIcon icon="pencil" />
             </div>
@@ -24,12 +33,12 @@ const target = route.params.sender;
 
         <div class="p-4 pt-0 pb-2 container">
             <div class="mt-2 ml-1">
-                <p><span class="font-semibold">Type:</span> {{ localData.type }}</p>
+                <p><span class="font-semibold">Type:</span> {{ data.type }}</p>
             </div>
 
             <div>
                 <ul>
-                    <li class="bg-primary p-2 rounded-xl mt-3 mb-2 flex justify-between drop-shadow-md" v-for="a in localData.exercises">
+                    <li class="bg-primary p-2 rounded-xl mt-3 mb-2 flex justify-between drop-shadow-md" v-for="a in data.exercises">
                         <div class="ml-1 w-full">
                             <p class="font-bold tracking-wider text-xl mb-1">{{ a.name }}</p>
                             <hr class="border-gray-500 mb-1" />

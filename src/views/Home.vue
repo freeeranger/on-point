@@ -1,9 +1,8 @@
 <script setup>
-import { data } from "../data/data.js";
 import { Bar } from "vue-chartjs";
 import { Chart as ChartJS, Title, Tooltip, Legend, BarElement, CategoryScale, LinearScale } from "chart.js";
 import { faRightToBracket } from "@fortawesome/free-solid-svg-icons";
-import { onMounted, ref } from "vue";
+import { onMounted, ref, watch } from "vue";
 import { supabase } from "../supabase.js";
 
 ChartJS.register(Title, Tooltip, Legend, BarElement, CategoryScale, LinearScale);
@@ -14,11 +13,7 @@ ChartJS.defaults.color = "rgb(156 163 175)";
 
 let chartData = {
     labels: ["M", "T", "W", "T", "F", "S", "S"],
-    datasets: [
-        {
-            data: [30, 20, 30, 20, null, 30, 50],
-        },
-    ],
+    datasets: [{ data: [30, 20, 30, 20, null, 30, 50] }],
 };
 
 let chartOptions = {
@@ -53,31 +48,41 @@ let chartOptions = {
     },
 };
 
+let data = ref(null);
+
 async function sqlStuff() {
-    let { data: userData, error } = await supabase.from("UserData").select("user");
-    console.log(userData[0].user);
+    let { data: userData, error } = await supabase.from("UserData").select();
+    data.value = userData.find((user) => user.user == supabase.auth.user().id);
 }
 
 let show = ref([]);
-
+let dataAssigned = false;
 onMounted(() => {
-    for(let i = 0; i < 3; i++){
-        setTimeout(() => {
-            show.value[i] = true;
-        }, i * 75);
-    }
+    watch(data, () => {
+        if (data != null && !dataAssigned) {
+            for (let i = 0; i < 3; i++) {
+                setTimeout(() => {
+                    show.value[i] = true;
+                }, i * 75);
+            }
+            dataAssigned = true;
+        }
+    });
 });
 
 sqlStuff();
-
 </script>
 
 <template>
-    <div class="m-4 text-white">
+    <div class="m-4 text-white" v-if="data != null">
         <div class="p-4 pt-2 pb-2">
             <h2 class="text-2xl font-medium mb-2">Previous workouts</h2>
             <ul>
-                <li :class="show[index] ? 'opacity-100' : 'opacity-0'" class="fade-in bg-primary p-2 rounded-xl mb-3 flex justify-between drop-shadow-md items-center" v-for="(workout, index) in data.slice(0, 3)">
+                <li
+                    :class="show[index] ? 'opacity-100' : 'opacity-0'"
+                    class="fade-in bg-primary p-2 rounded-xl mb-3 flex justify-between drop-shadow-md items-center"
+                    v-for="(workout, index) in data.data.workouts.slice(0, 3)"
+                >
                     <div class="flex">
                         <div class="flex items-center mr-1">
                             <div class="bg-accent-gradient w-10 h-10 rounded-xl mr-2 flex items-center justify-center">

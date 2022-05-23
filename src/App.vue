@@ -31,7 +31,7 @@ $secondary: $next-secondary;
 $accent: $next-accent;
 $bg: $next-bg;
 
-.fade-in{
+.fade-in {
     transition: opacity 0.35s ease-in;
 }
 

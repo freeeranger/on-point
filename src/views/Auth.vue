@@ -25,6 +25,8 @@ const signup = async () => {
         });
         if (error) throw error;
         router.push({ name: "home" });
+
+        const { data, err } = await supabase.from("UserData").insert([{ user: user.id, data: { workouts: [] } }]);
     } catch (error) {
         alert(error.error_description || error.message);
     } finally {
