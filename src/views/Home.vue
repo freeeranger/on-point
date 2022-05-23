@@ -3,7 +3,7 @@ import { data } from "../data/data.js";
 import { Bar } from "vue-chartjs";
 import { Chart as ChartJS, Title, Tooltip, Legend, BarElement, CategoryScale, LinearScale } from "chart.js";
 import { faRightToBracket } from "@fortawesome/free-solid-svg-icons";
-import { onMounted } from "vue";
+import { onMounted, ref } from "vue";
 import { supabase } from "../supabase.js";
 
 ChartJS.register(Title, Tooltip, Legend, BarElement, CategoryScale, LinearScale);
@@ -58,7 +58,18 @@ async function sqlStuff() {
     console.log(userData[0].user);
 }
 
+let show = ref([]);
+
+onMounted(() => {
+    for(let i = 0; i < 3; i++){
+        setTimeout(() => {
+            show.value[i] = true;
+        }, i * 75);
+    }
+});
+
 sqlStuff();
+
 </script>
 
 <template>
@@ -66,7 +77,7 @@ sqlStuff();
         <div class="p-4 pt-2 pb-2">
             <h2 class="text-2xl font-medium mb-2">Previous workouts</h2>
             <ul>
-                <li class="bg-primary p-2 rounded-xl mb-3 flex justify-between drop-shadow-md items-center" v-for="(workout, index) in data.slice(0, 3)">
+                <li :class="show[index] ? 'opacity-100' : 'opacity-0'" class="fade-in bg-primary p-2 rounded-xl mb-3 flex justify-between drop-shadow-md items-center" v-for="(workout, index) in data.slice(0, 3)">
                     <div class="flex">
                         <div class="flex items-center mr-1">
                             <div class="bg-accent-gradient w-10 h-10 rounded-xl mr-2 flex items-center justify-center">
@@ -89,7 +100,7 @@ sqlStuff();
 
         <div class="p-4 pt-2">
             <h2 class="text-2xl font-medium mb-2">Activity</h2>
-            <div class="bg-primary rounded-xl drop-shadow-md h-36">
+            <div :class="show[0] ? 'opacity-100' : 'opacity-0'" class="fade-in bg-primary rounded-xl drop-shadow-md h-36">
                 <div class="p-4 pt-3">
                     <p class="text-gray-400 text-xs mb-1">Last 7 days</p>
                     <Bar id="myChart" :chart-options="chartOptions" :height="100" :chart-data="chartData" />
@@ -101,4 +112,4 @@ sqlStuff();
     </div>
 </template>
 
-<style scoped></style>
+<style scoped lang="scss"></style>

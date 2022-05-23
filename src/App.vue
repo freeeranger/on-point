@@ -31,6 +31,10 @@ $secondary: $next-secondary;
 $accent: $next-accent;
 $bg: $next-bg;
 
+.fade-in{
+    transition: opacity 0.35s ease-in;
+}
+
 html {
     background-color: $bg;
     width: 100%;

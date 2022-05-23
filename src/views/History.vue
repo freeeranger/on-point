@@ -1,5 +1,16 @@
 <script setup>
 import { data } from "../data/data.js";
+import { onMounted, ref } from "vue";
+
+let show = ref([]);
+
+onMounted(() => {
+    for(let i = 0; i < data.value.length; i++){
+        setTimeout(()=>{
+            show.value[i] = true;
+        }, i * 75);
+    }
+});
 </script>
 
 <template>
@@ -7,7 +18,7 @@ import { data } from "../data/data.js";
         <div class="p-4 pt-2 pb-2">
             <h2 class="text-2xl font-medium mb-2">Previous workouts</h2>
             <ul>
-                <li class="bg-primary p-2 rounded-xl mb-3 flex justify-between drop-shadow-md items-center" v-for="(workout, index) in data">
+                <li :class="show[index] ? 'opacity-100' : 'opacity-0'" class="fade-in bg-primary p-2 rounded-xl mb-3 flex justify-between drop-shadow-md items-center" v-for="(workout, index) in data">
                     <div class="flex">
                         <div class="flex items-center mr-1">
                             <div class="bg-accent-gradient w-10 h-10 rounded-xl mr-2 flex items-center justify-center">
