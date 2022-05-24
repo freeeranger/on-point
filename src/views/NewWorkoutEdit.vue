@@ -3,12 +3,13 @@ import EditExercise from "../components/EditExercise.vue";
 import { supabase } from "../supabase.js";
 import { ref } from "vue";
 import { useRoute } from "vue-router";
+import { json } from "body-parser";
 
 const route = useRoute();
 
 let workout = ref({
     type: "None",
-    date: "2022-01-01",
+    date: "30 mars",
     exercises: [],
 });
 
@@ -32,6 +33,22 @@ function editExercise(index) {
     currentExercise.value = index;
 }
 
+async function finishWorkout() {
+    await sqlStuff();
+
+    let newData = tempData.workoutData;
+    newData.workouts.unshift(workout.value);
+
+    let { data: userData, error } = await supabase
+        .from("UserData")
+        .update({
+            workoutData: newData,
+        })
+        .match({
+            user: supabase.auth.user().id,
+        });
+}
+
 let tempData;
 async function sqlStuff() {
     let { data: userData, error } = await supabase.from("UserData").select();
@@ -41,13 +58,25 @@ async function sqlStuff() {
 async function addData() {
     await sqlStuff();
 
-    if (route.params.id == null) return;
+    if (tempData.workoutPresetData.presets[route.params.id] == null) return;
 
     tempData.workoutPresetData.presets[route.params.id].exercises.forEach((exercise) => {
+        let newData = [];
+
+        for (let i = 0; i < exercise.sets; i++) {
+            newData.push({
+                weight: null,
+                reps: null,
+            });
+        }
         workout.value.exercises.push({
             name: exercise.name,
-            sets: exercise.sets,
+            sets: newData,
         });
+
+        const monthNames = ["january", "february", "march", "april", "may", "june", "july", "august", "september", "october", "november", "december"];
+        workout.value.type = tempData.workoutPresetData.presets[route.params.id].name;
+        workout.value.date = new Date().getDate() + " " + monthNames[new Date().getMonth()];
     });
 }
 addData();
@@ -99,12 +128,21 @@ addData();
                 </li>
             </ul>
 
-            <button
-                class="bg-accent-gradient mt-2 font-semibold inline px-4 py-2 mb-11 transition duration-100 ease-in-out rounded-xl shadow hover:bg-accent focus:border-accent focus:ring-2 focus:ring-white focus:outline-none focus:ring-opacity-50 disabled:opacity-50 disabled:cursor-not-allowed"
-                @click="addExercise"
-            >
-                Add Exercise
-            </button>
+            <div class="flex justify-between">
+                <button
+                    class="bg-accent-gradient mt-2 font-semibold inline px-4 py-2 mb-11 transition duration-100 ease-in-out rounded-xl shadow hover:bg-accent focus:border-accent focus:ring-2 focus:ring-white focus:outline-none focus:ring-opacity-50 disabled:opacity-50 disabled:cursor-not-allowed"
+                    @click="addExercise"
+                >
+                    Add Exercise
+                </button>
+
+                <button
+                    class="bg-accent-gradient mt-2 font-semibold inline px-4 py-2 mb-11 transition duration-100 ease-in-out rounded-xl shadow hover:bg-accent focus:border-accent focus:ring-2 focus:ring-white focus:outline-none focus:ring-opacity-50 disabled:opacity-50 disabled:cursor-not-allowed"
+                    @click="finishWorkout"
+                >
+                    Finish
+                </button>
+            </div>
         </div>
     </div>
     <EditExercise v-if="popupVisible" :data="workout.exercises[currentExercise]" @close-event="() => (popupVisible = false)" />
