@@ -1,89 +1,69 @@
 <script setup>
-import EditExercise from "../components/EditExercise.vue";
-import { ref } from "vue";
+import { supabase } from "../supabase.js";
+import { onMounted, ref, watch } from "vue";
 
-let workout = ref({
-    type: "None",
-    date: "2022-01-01",
-    exercises: [],
+let data = ref(null);
+
+async function sqlStuff() {
+    let { data: userData, error } = await supabase.from("UserData").select();
+    data.value = userData.find((user) => user.user == supabase.auth.user().id);
+}
+
+let show = ref([]);
+let dataAssigned = false;
+onMounted(() => {
+    watch(data, () => {
+        if (data != null && !dataAssigned) {
+            for (let i = 0; i < data.value.workoutPresetData.presets.length; i++) {
+                setTimeout(() => {
+                    show.value[i] = true;
+                }, i * 75);
+            }
+            dataAssigned = true;
+        }
+    });
 });
 
-function addExercise() {
-    workout.value.exercises.push({
-        name: "",
-        sets: [],
-    });
-    editExercise(workout.value.exercises.length - 1);
-}
-
-function edit() {
-    console.log("edit");
-}
-
-let currentExercise = ref(0);
-let popupVisible = ref(false);
-
-function editExercise(index) {
-    popupVisible.value = true;
-    currentExercise.value = index;
-}
+sqlStuff();
 </script>
 
 <template>
-    <div class="m-4 text-white">
-        <div class="p-4 pt-2">
-            <h2 class="text-2xl font-medium mb-2">New workout</h2>
+    <div class="m-4 text-white" v-if="data != null">
+        <div class="p-4 pt-2 pb-0">
+            <h2 class="text-2xl font-medium mb-2">New Workout</h2>
             <ul>
-                <li class="bg-primary p-2 rounded-xl mb-3 flex justify-between drop-shadow-md">
-                    <div class="ml-1">
-                        <p><span class="font-semibold">Type:</span> {{ workout.type }}</p>
-                    </div>
-                    <div class="mr-2">
-                        <span @click="edit"><FaIcon icon="pencil" /></span>
-                    </div>
-                </li>
-
-                <li class="bg-primary p-2 rounded-xl mb-3 flex justify-between drop-shadow-md">
-                    <div class="ml-1">
-                        <p><span class="font-semibold">Date:</span> {{ workout.date }}</p>
-                    </div>
-                    <div class="mr-2">
-                        <span @click="edit"><FaIcon icon="pencil" /></span>
-                    </div>
-                </li>
-            </ul>
-
-            <ul>
-                <li class="bg-primary p-2 rounded-xl mt-3 mb-2 flex justify-between drop-shadow-md" v-for="(a, index) in workout.exercises">
-                    <div class="ml-1 w-full">
-                        <div class="flex justify-between items-center">
-                            <p class="font-semibold tracking-wider text-xl mb-1">{{ a.name }}</p>
-                            <span @click="editExercise(index)"><FaIcon icon="pencil" class="mr-2 mb-1" /></span>
+                <li
+                    :class="show[index] ? 'opacity-100' : 'opacity-0'"
+                    class="fade-in bg-primary p-2 rounded-xl mb-3 flex justify-between drop-shadow-md items-center"
+                    v-for="(workout, index) in data.workoutPresetData.presets"
+                >
+                    <div class="flex">
+                        <div class="flex items-center mr-1">
+                            <div class="bg-accent-gradient w-10 h-10 rounded-xl mr-2 flex items-center justify-center">
+                                <FaIcon icon="dumbbell" class="text-base" />
+                            </div>
                         </div>
-
-                        <hr class="border-gray-500 mb-1" />
-                        <table class="w-full">
-                            <tbody>
-                                <tr v-for="(b, index) in a.sets">
-                                    <td><span class="text-xs text-gray-300"># </span>{{ index + 1 }}</td>
-                                    <td>{{ b.weight }} <span class="text-xs text-gray-300">kg</span></td>
-                                    <td>{{ b.reps }} <span class="text-xs text-gray-300">reps</span></td>
-                                </tr>
-                            </tbody>
-                        </table>
+                        <div class="flex items-center">
+                            <!--<p class="text-gray-400 text-xs">{{ workout.name }}</p>-->
+                            <p class="font-medium">{{ workout.name }}</p>
+                        </div>
+                    </div>
+                    <div class="mr-4">
+                        <FaIcon icon="angle-right" @click="$router.push({ name: 'edit-workout', params: { id: index } })" />
                     </div>
                 </li>
             </ul>
+        </div>
 
+        <div class="p-4 pt-0">
             <button
-                class="bg-accent-gradient mt-2 font-semibold inline px-4 py-2 mb-11 transition duration-100 ease-in-out rounded-xl shadow hover:bg-accent focus:border-accent focus:ring-2 focus:ring-white focus:outline-none focus:ring-opacity-50 disabled:opacity-50 disabled:cursor-not-allowed"
-                @click="addExercise"
+                class="font-semibold inline px-4 py-2 transition duration-100 ease-in-out bg-accent-gradient rounded-xl shadow hover:bg-accent2 focus:border-accent2 focus:ring-2 focus:ring-white focus:outline-none focus:ring-opacity-50 disabled:opacity-50 disabled:cursor-not-allowed"
+                @click="$router.push({ name: 'edit-workout' })"
             >
-                Add Exercise
+                Custom Workout
             </button>
         </div>
     </div>
-    <EditExercise v-if="popupVisible" :data="workout.exercises[currentExercise]" @close-event="() => (popupVisible = false)" />
 </template>
 
-<style scoped lang="scss"></style>
+<style scoped></style>

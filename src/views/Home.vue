@@ -1,7 +1,6 @@
 <script setup>
 import { Bar } from "vue-chartjs";
 import { Chart as ChartJS, Title, Tooltip, Legend, BarElement, CategoryScale, LinearScale } from "chart.js";
-import { faRightToBracket } from "@fortawesome/free-solid-svg-icons";
 import { onMounted, ref, watch } from "vue";
 import { supabase } from "../supabase.js";
 
@@ -81,7 +80,7 @@ sqlStuff();
                 <li
                     :class="show[index] ? 'opacity-100' : 'opacity-0'"
                     class="fade-in bg-primary p-2 rounded-xl mb-3 flex justify-between drop-shadow-md items-center"
-                    v-for="(workout, index) in data.data.workouts.slice(0, 3)"
+                    v-for="(workout, index) in data.workoutData.workouts.slice(0, 3)"
                 >
                     <div class="flex">
                         <div class="flex items-center mr-1">

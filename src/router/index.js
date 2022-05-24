@@ -20,6 +20,11 @@ const routes = [
         component: () => import(/* webpackChunkName: "new-workout" */ "../views/NewWorkout.vue"),
     },
     {
+        path: "/edit-workout/:id?",
+        name: "edit-workout",
+        component: () => import(/* webpackChunkName: "edit-workout" */ "../views/NewWorkoutEdit.vue"),
+    },
+    {
         path: "/options",
         name: "options",
         component: () => import(/* webpackChunkName: "options" */ "../views/Options.vue"),

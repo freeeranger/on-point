@@ -14,7 +14,7 @@ let dataAssigned = false;
 onMounted(() => {
     watch(data, () => {
         if (data != null && !dataAssigned) {
-            for (let i = 0; i < data.value.data.workouts.length; i++) {
+            for (let i = 0; i < data.value.workoutData.workouts.length; i++) {
                 setTimeout(() => {
                     show.value[i] = true;
                 }, i * 75);
@@ -35,7 +35,7 @@ sqlStuff();
                 <li
                     :class="show[index] ? 'opacity-100' : 'opacity-0'"
                     class="fade-in bg-primary p-2 rounded-xl mb-3 flex justify-between drop-shadow-md items-center"
-                    v-for="(workout, index) in data.data.workouts"
+                    v-for="(workout, index) in data.workoutData.workouts"
                 >
                     <div class="flex">
                         <div class="flex items-center mr-1">

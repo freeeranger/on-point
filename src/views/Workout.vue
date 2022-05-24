@@ -11,7 +11,7 @@ let data = ref(null);
 
 async function sqlStuff() {
     let { data: userData, error } = await supabase.from("UserData").select();
-    data.value = userData.find((user) => user.user == supabase.auth.user().id).data.workouts[route.params.id];
+    data.value = userData.find((user) => user.user == supabase.auth.user().id).workoutData.workouts[route.params.id];
 }
 
 sqlStuff();
