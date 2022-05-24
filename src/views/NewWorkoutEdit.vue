@@ -58,7 +58,11 @@ async function sqlStuff() {
 async function addData() {
     await sqlStuff();
 
+    const monthNames = ["january", "february", "march", "april", "may", "june", "july", "august", "september", "october", "november", "december"];
+    workout.value.date = new Date().getDate() + " " + monthNames[new Date().getMonth()];
+
     if (tempData.workoutPresetData.presets[route.params.id] == null) return;
+    workout.value.type = tempData.workoutPresetData.presets[route.params.id].name;
 
     tempData.workoutPresetData.presets[route.params.id].exercises.forEach((exercise) => {
         let newData = [];
@@ -73,10 +77,6 @@ async function addData() {
             name: exercise.name,
             sets: newData,
         });
-
-        const monthNames = ["january", "february", "march", "april", "may", "june", "july", "august", "september", "october", "november", "december"];
-        workout.value.type = tempData.workoutPresetData.presets[route.params.id].name;
-        workout.value.date = new Date().getDate() + " " + monthNames[new Date().getMonth()];
     });
 }
 addData();
