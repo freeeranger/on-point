@@ -14,20 +14,7 @@ const emits = defineEmits(["closeEvent", "deleteEvent"]);
 
 data.value = props.data;
 
-function addSet() {
-    data.value.sets.push({
-        weight: "",
-        reps: "",
-    });
-}
-
-function deleteSet(index){
-    data.value.sets.splice(index, 1);
-}
-
-function deleteExercise(){
-    
-}
+function deleteExercise() {}
 </script>
 
 <template>
@@ -38,58 +25,16 @@ function deleteExercise(){
             <div class="bg-primary rounded-lg drop-shadow-md m-4 w-full ml-8 mr-8">
                 <div class="p-2">
                     <div class="tracking-wider text-xl mb-1 flex">
-                        <span class="font-bold">Type:</span>
+                        <span class="font-bold">Time:</span>
                         <input
                             class="text-base ml-2 mr-1 w-full inline px-1 py-0 text-white placeholder-gray-400 transition duration-100 ease-in-out bg-secondary rounded-md shadow-sm focus:border-blue-500 focus:ring-2 focus:ring-blue-500 focus:outline-none focus:ring-opacity-50 disabled:opacity-50 disabled:cursor-not-allowed"
                             type="text"
-                            v-model="data.name"
+                            v-model="data.time"
                         />
-                    </div>
-                    <hr class="border-slate-500 mb-1" />
-                    <div v-for="(a, index) in data.sets">
-                        <div class="tracking-wider mb-1">
-                            <div class="flex items-center justify-between">
-                                <span class="text-xl font-bold">Set {{ index + 1 }}</span>
-                                <span @click="deleteSet(index)"><FaIcon icon="trash" class="mr-2" /></span>  
-                            </div>
-                        </div>
-                        <div class="tracking-wider relative text-xl mb-1 flex">
-                            <span class="font-bold text-base">Weight:</span>
-                            <input
-                                class="ml-2 text-base mr-1 w-full inline px-1 py-0 text-white placeholder-gray-400 transition duration-100 ease-in-out bg-secondary rounded-md shadow-sm focus:border-blue-500 focus:ring-2 focus:ring-blue-500 focus:outline-none focus:ring-opacity-50 disabled:opacity-50 disabled:cursor-not-allowed"
-                                type="number"
-                                placeholder="95"
-                                v-model="data.sets[index].weight"
-                            />
-                            <p class="absolute right-2 bottom-0.5 text-sm">kg</p>
-                        </div>
-                        <div class="tracking-wider relative text-xl mt-2 flex mb-4">
-                            <span class="font-bold text-base">Reps:</span>
-                            <input
-                                class="ml-2 text-base mr-1 w-full inline px-1 py-0 text-white placeholder-gray-400 transition duration-100 ease-in-out bg-secondary rounded-md shadow-sm focus:border-blue-500 focus:ring-2 focus:ring-blue-500 focus:outline-none focus:ring-opacity-50 disabled:opacity-50 disabled:cursor-not-allowed"
-                                type="number"
-                                placeholder="5"
-                                v-model="data.sets[index].reps"
-                            />
-                        </div>
                     </div>
                 </div>
 
-                <div class="flex justify-center">
-                    <button
-                        class="mx-1 mb-2 mt-2 font-semibold inline px-2 py-1 transition duration-100 ease-in-out bg-accent-gradient rounded-md shadow hover:bg-accent2 focus:border-accent2 focus:ring-2 focus:ring-white focus:outline-none focus:ring-opacity-50 disabled:opacity-50 disabled:cursor-not-allowed"
-                        @click="addSet"
-                    >
-                        Add Set
-                    </button>
-
-                    <button
-                        class="bg-accent-gradient mx-1 mb-2 mt-2 font-semibold inline px-2 py-1 transition duration-100 ease-in-out rounded-md shadow hover:bg-accent2 focus:border-accent2 focus:ring-2 focus:ring-white focus:outline-none focus:ring-opacity-50 disabled:opacity-50 disabled:cursor-not-allowed"
-                        @click="$emit('deleteEvent')"
-                    >
-                        Remove
-                    </button>
-
+                <div class="flex justify-start">
                     <button
                         class="bg-accent-gradient mx-1 mb-2 mt-2 font-semibold inline px-2 py-1 transition duration-100 ease-in-out rounded-md shadow hover:bg-accent2 focus:border-accent2 focus:ring-2 focus:ring-white focus:outline-none focus:ring-opacity-50 disabled:opacity-50 disabled:cursor-not-allowed"
                         @click="$emit('closeEvent')"

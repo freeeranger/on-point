@@ -1,6 +1,6 @@
 <script setup>
 import EditExercise from "../components/EditExercise.vue";
-import EditTime from "../components/EditTime.vue"
+import EditTime from "../components/EditTime.vue";
 import { supabase } from "../supabase.js";
 import { ref } from "vue";
 import { useRoute } from "vue-router";
@@ -11,7 +11,7 @@ const route = useRoute();
 let workout = ref({
     type: "None",
     date: "30 mars",
-    time: "60",
+    time: 60,
     exercises: [],
 });
 
@@ -36,7 +36,7 @@ function editExercise(index) {
     currentExercise.value = index;
 }
 
-function editTime(){
+function editTime() {
     editTimeVisible.value = true;
 }
 
@@ -65,8 +65,23 @@ async function sqlStuff() {
 async function addData() {
     await sqlStuff();
 
-    const monthNames = ["january", "february", "march", "april", "may", "june", "july", "august", "september", "october", "november", "december"];
-    workout.value.date = new Date().getDate() + " " + monthNames[new Date().getMonth()];
+    let date = new Date();
+
+    let month;
+    if (date.getMonth() < 10) {
+        month = "0" + (date.getMonth() + 1);
+    } else {
+        month = date.getMonth() + 1;
+    }
+
+    let day;
+    if (date.getDate() < 10) {
+        day = "0" + date.getDate();
+    } else {
+        day = date.getDate();
+    }
+
+    workout.value.date = day + "-" + month + "-" + date.getFullYear();
 
     if (tempData.workoutPresetData.presets[route.params.id] == null) return;
     workout.value.type = tempData.workoutPresetData.presets[route.params.id].name;
@@ -114,7 +129,7 @@ addData();
 
                 <li class="bg-primary p-2 rounded-xl mb-3 flex justify-between drop-shadow-md">
                     <div class="ml-1">
-                        <p><span class="font-semibold">Time:</span> {{ workout.date }}</p>
+                        <p><span class="font-semibold">Time:</span> {{ workout.time }}</p>
                     </div>
                     <div class="mr-2">
                         <span @click="editTime()"><FaIcon icon="pencil" /></span>
@@ -161,21 +176,19 @@ addData();
             </div>
         </div>
     </div>
-    <EditExercise 
-        v-if="editExerciseVisible" 
-        :data="workout.exercises[currentExercise]" 
-        @close-event="() => (editExerciseVisible = false)" 
-        @delete-event="() => {
-            editExerciseVisible = false;
-            workout.exercises.splice(currentExercise, 1);
-        }"
+    <EditExercise
+        v-if="editExerciseVisible"
+        :data="workout.exercises[currentExercise]"
+        @close-event="() => (editExerciseVisible = false)"
+        @delete-event="
+            () => {
+                editExerciseVisible = false;
+                workout.exercises.splice(currentExercise, 1);
+            }
+        "
     />
 
-    <EditTime
-        v-if="editTimeVisible"
-        :data="workout.time"
-        @close-event="() => (editTimeVisible = false)" 
-    />
+    <EditTime v-if="editTimeVisible" :data="workout" @close-event="() => (editTimeVisible = false)" />
 </template>
 
 <style scoped lang="scss"></style>

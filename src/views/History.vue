@@ -25,6 +25,8 @@ onMounted(() => {
 });
 
 sqlStuff();
+
+const monthNames = ["january", "february", "march", "april", "may", "june", "july", "august", "september", "october", "november", "december"];
 </script>
 
 <template>
@@ -44,7 +46,7 @@ sqlStuff();
                             </div>
                         </div>
                         <div>
-                            <p class="text-gray-400 text-xs">{{ workout.date }}</p>
+                            <p class="text-gray-400 text-xs">{{ workout.date.split("-")[0] + " " + monthNames[workout.date.split("-")[1] - 1] }}</p>
                             <p class="font-medium">{{ workout.type }}</p>
                         </div>
                     </div>

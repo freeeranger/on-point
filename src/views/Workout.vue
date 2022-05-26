@@ -34,6 +34,7 @@ sqlStuff();
         <div class="p-4 pt-0 pb-2 container">
             <div class="mt-2 ml-1">
                 <p><span class="font-semibold">Type:</span> {{ data.type }}</p>
+                <p><span class="font-semibold">Time:</span> {{ data.time }} minutes</p>
             </div>
 
             <div>

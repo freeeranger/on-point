@@ -6,14 +6,9 @@ import { supabase } from "../supabase.js";
 
 ChartJS.register(Title, Tooltip, Legend, BarElement, CategoryScale, LinearScale);
 ChartJS.defaults.font.family = "Poppins";
-ChartJS.defaults.font.color = "rgb(156 163 175)";
 ChartJS.defaults.font.weight = 400;
+ChartJS.defaults.font.color = "rgb(156 163 175)";
 ChartJS.defaults.color = "rgb(156 163 175)";
-
-let chartData = {
-    labels: ["M", "T", "W", "T", "F", "S", "S"],
-    datasets: [{ data: [30, 20, 30, 20, null, 30, 50] }],
-};
 
 let chartOptions = {
     responsive: true,
@@ -47,6 +42,68 @@ let chartOptions = {
     },
 };
 
+let labels = ref([]);
+let values = ref([]);
+
+function getDateText(timeStamp) {
+    let date = new Date(timeStamp);
+
+    let month;
+    if (date.getMonth() < 10) {
+        month = "0" + (date.getMonth() + 1);
+    } else {
+        month = date.getMonth() + 1;
+    }
+
+    let day;
+    if (date.getDate() < 10) {
+        day = "0" + date.getDate();
+    } else {
+        day = date.getDate();
+    }
+
+    return day + "-" + month + "-" + date.getFullYear();
+}
+
+function getPreviousTimeStamp(timeStamp, daysBack) {
+    return timeStamp - daysBack * (24 * 60 * 60 * 1000);
+}
+
+function generateChartData() {
+    const weekDays = ["M", "T", "W", "T", "F", "S", "S"];
+    let date = new Date();
+
+    for (let i = date.getDay(); i < date.getDay() + 7; i++) {
+        let j = i;
+        if (j >= 7) {
+            j -= 7;
+        }
+        labels.value.push(weekDays[j]);
+    }
+
+    //console.log(getDateText(getPreviousTimeStamp(date.getTime(), 2)));
+    //console.log(getDateText(date.getTime()));
+
+    //////
+
+    for (let i = 0; i < 7; i++) {
+        let result = data.value.workoutData.workouts.filter((obj) => {
+            return obj.date == getDateText(getPreviousTimeStamp(date.getTime(), i));
+        });
+        values.value[i] = 0;
+        for (let j = 0; j < result.length; j++) {
+            values.value[i] += result[j].time;
+        }
+        if (values.value[i] == 0) values.value[i] = null;
+    }
+    values.value.reverse();
+}
+
+let chartData = {
+    labels: labels.value,
+    datasets: [{ data: values.value }],
+};
+
 let data = ref(null);
 
 async function sqlStuff() {
@@ -65,11 +122,15 @@ onMounted(() => {
                 }, i * 75);
             }
             dataAssigned = true;
+
+            generateChartData();
         }
     });
 });
 
 sqlStuff();
+
+const monthNames = ["january", "february", "march", "april", "may", "june", "july", "august", "september", "october", "november", "december"];
 </script>
 
 <template>
@@ -90,7 +151,7 @@ sqlStuff();
                             </div>
                         </div>
                         <div>
-                            <p class="text-gray-400 text-xs">{{ workout.date }}</p>
+                            <p class="text-gray-400 text-xs">{{ workout.date.split("-")[0] + " " + monthNames[workout.date.split("-")[1] - 1] }}</p>
                             <p class="font-medium">{{ workout.type }}</p>
                         </div>
                     </div>
