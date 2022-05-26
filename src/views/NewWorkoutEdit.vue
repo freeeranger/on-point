@@ -1,5 +1,6 @@
 <script setup>
 import EditExercise from "../components/EditExercise.vue";
+import EditTime from "../components/EditTime.vue"
 import { supabase } from "../supabase.js";
 import { ref } from "vue";
 import { useRoute } from "vue-router";
@@ -10,6 +11,7 @@ const route = useRoute();
 let workout = ref({
     type: "None",
     date: "30 mars",
+    time: "60",
     exercises: [],
 });
 
@@ -26,11 +28,16 @@ function edit() {
 }
 
 let currentExercise = ref(0);
-let popupVisible = ref(false);
+let editTimeVisible = ref(false);
+let editExerciseVisible = ref(false);
 
 function editExercise(index) {
-    popupVisible.value = true;
+    editExerciseVisible.value = true;
     currentExercise.value = index;
+}
+
+function editTime(){
+    editTimeVisible.value = true;
 }
 
 async function finishWorkout() {
@@ -104,6 +111,15 @@ addData();
                         <span @click="edit"><FaIcon icon="pencil" /></span>
                     </div>
                 </li>
+
+                <li class="bg-primary p-2 rounded-xl mb-3 flex justify-between drop-shadow-md">
+                    <div class="ml-1">
+                        <p><span class="font-semibold">Time:</span> {{ workout.date }}</p>
+                    </div>
+                    <div class="mr-2">
+                        <span @click="editTime()"><FaIcon icon="pencil" /></span>
+                    </div>
+                </li>
             </ul>
 
             <ul>
@@ -145,7 +161,21 @@ addData();
             </div>
         </div>
     </div>
-    <EditExercise v-if="popupVisible" :data="workout.exercises[currentExercise]" @close-event="() => (popupVisible = false)" />
+    <EditExercise 
+        v-if="editExerciseVisible" 
+        :data="workout.exercises[currentExercise]" 
+        @close-event="() => (editExerciseVisible = false)" 
+        @delete-event="() => {
+            editExerciseVisible = false;
+            workout.exercises.splice(currentExercise, 1);
+        }"
+    />
+
+    <EditTime
+        v-if="editTimeVisible"
+        :data="workout.time"
+        @close-event="() => (editTimeVisible = false)" 
+    />
 </template>
 
 <style scoped lang="scss"></style>

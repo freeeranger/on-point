@@ -19,9 +19,10 @@ import {
     faBell,
     faLock,
     faInfoCircle,
+    faTrash,
 } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
 
-library.add(faRocket, faDumbbell, faHouse, faCirclePlus, faCog, faPencil, faAngleLeft, faAngleRight, faUser, faPalette, faClipboard, faBell, faLock, faInfoCircle);
+library.add(faRocket, faDumbbell, faHouse, faCirclePlus, faCog, faPencil, faAngleLeft, faAngleRight, faUser, faPalette, faClipboard, faBell, faLock, faInfoCircle, faTrash);
 
 createApp(App).use(router).component("FaIcon", FontAwesomeIcon).mount("#app");

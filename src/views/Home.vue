@@ -81,6 +81,7 @@ sqlStuff();
                     :class="show[index] ? 'opacity-100' : 'opacity-0'"
                     class="fade-in bg-primary p-2 rounded-xl mb-3 flex justify-between drop-shadow-md items-center"
                     v-for="(workout, index) in data.workoutData.workouts.slice(0, 3)"
+                    @click="$router.push({ name: 'workout', params: { id: index, sender: 'home' } })"
                 >
                     <div class="flex">
                         <div class="flex items-center mr-1">
@@ -94,7 +95,7 @@ sqlStuff();
                         </div>
                     </div>
                     <div class="mr-4">
-                        <FaIcon icon="angle-right" @click="$router.push({ name: 'workout', params: { id: index, sender: 'home' } })" />
+                        <FaIcon icon="angle-right" />
                     </div>
                 </li>
             </ul>
@@ -111,8 +112,6 @@ sqlStuff();
                 </div>
             </div>
         </div>
-
-        <br />
     </div>
 </template>
 

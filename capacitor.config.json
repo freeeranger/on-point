@@ -1,6 +1,6 @@
 {
-    "appId": "com.freeranger.onpoint",
-    "appName": "on-point",
-    "webDir": "dist",
-    "bundledWebRuntime": false
+  "appId": "com.freeranger.onpoint",
+  "appName": "on-point",
+  "webDir": "dist",
+  "bundledWebRuntime": false
 }
